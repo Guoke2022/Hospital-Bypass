@@ -13,63 +13,102 @@ warnings.filterwarnings('ignore')
 pd.set_option('display.max_columns', None)
 
 
-# --------------------------
-# Parameter settings
-# --------------------------
+def identify_hospital_staff(input_path: Path, worker_threshold: int) -> pd.DataFrame:
+    """
+    Identify hospital staff users based on appearance frequency across multiple days.
+
+    Parameters
+    ----------
+    input_path : Path
+        Folder containing daily `single_day_patients_*.csv` files.
+    worker_threshold : int
+        Users appearing in ≥ worker_threshold days are classified as hospital staff.
+
+    Returns
+    -------
+    pd.DataFrame
+        DataFrame containing IDs of identified hospital staff.
+    """
+    print("Loading daily single_day_patients files...")
+
+    all_files = sorted(input_path.glob("single_day_patients_*.csv"))
+    dfs = []
+
+    for f in all_files:
+        df = pd.read_csv(f)
+        df["day_file"] = f.name
+        dfs.append(df)
+
+    full_df = pd.concat(dfs, ignore_index=True)
+
+    # Count distinct days per user
+    id_day_counts = full_df.groupby("id")["day_file"].nunique()
+
+    # Staff appear in >= threshold days
+    worker_ids = id_day_counts[id_day_counts >= worker_threshold].index
+    worker_df = pd.DataFrame({"id": worker_ids})
+
+    print(f"Identified {len(worker_df)} hospital staff users.")
+    return worker_df
 
 
-INPUT_PATH = Path("../data/result_test")         # Folder containing 60 daily single_day_patients files
-OUTPUT_PATH = Path("../data/result_test/drop_staff")      # Folder to save cleaned files without hospital staff
-WORKER_THRESHOLD = 20                            # If a user appears ≥20 days, classify as hospital staff
+def remove_staff_from_daily_files(input_path: Path, output_path: Path, staff_ids: pd.Series):
+    """
+    Remove hospital staff from all daily trajectory files and save cleaned versions.
 
-OUTPUT_PATH.mkdir(parents=True, exist_ok=True)
+    Parameters
+    ----------
+    input_path : Path
+        Folder containing input daily CSV files.
+    output_path : Path
+        Folder where cleaned CSV files will be saved.
+    staff_ids : pd.Series
+        Series containing all staff user IDs.
+    """
+    print("\nFiltering out hospital staff from each file...\n")
 
-# ==============================================================
-# 1. Read all daily files and identify hospital staff users
-# ==============================================================
+    all_files = sorted(input_path.glob("single_day_patients_*.csv"))
 
-print("Loading all single_day_patients files...")
+    for f in all_files:
+        df = pd.read_csv(f)
+        before = len(df)
 
-all_files = sorted(INPUT_PATH.glob("single_day_patients_*.csv"))
-dfs = []
+        # Filter out staff
+        df_clean = df[~df["id"].isin(staff_ids)]
+        after = len(df_clean)
 
-for f in all_files:
-    df = pd.read_csv(f)
-    df["day_file"] = f.name  # Track which day the record comes from
-    dfs.append(df)
+        # Output filename
+        new_name = f.stem + "_drop_staff.csv"
+        out_path = output_path / new_name
 
-full_df = pd.concat(dfs, ignore_index=True)
+        df_clean.to_csv(out_path, index=False, encoding="utf-8-sig")
 
-# Count how many distinct days each user appears
-id_day_counts = full_df.groupby("id")["day_file"].nunique()
+        print(f"{f.name}: {before} → {after} (removed {before - after}) → saved as {new_name}")
 
-# Identify hospital staff (appear in ≥ WORKER_THRESHOLD days)
-worker_ids = id_day_counts[id_day_counts >= WORKER_THRESHOLD].index
-worker_df = pd.DataFrame({"id": worker_ids})
+    print("\nAll files processed successfully!")
 
-# Save staff list
-worker_list_path = OUTPUT_PATH / f"hospital_staff_list.csv"
-worker_df.to_csv(worker_list_path, index=False, encoding="utf-8-sig")
-print(f"Hospital staff list saved: {worker_list_path}")
 
-# ==============================================================
-# 2. Remove hospital staff from each daily file and save cleaned files
-# ==============================================================
+def main():
+    # --------------------------
+    # Parameter settings
+    # --------------------------
+    INPUT_PATH = Path("../data/result_test")
+    OUTPUT_PATH = Path("../data/result_test/drop_staff")
+    WORKER_THRESHOLD = 20  # Appear ≥20 days → hospital staff
 
-print("\nFiltering out hospital staff from each daily file...\n")
+    OUTPUT_PATH.mkdir(parents=True, exist_ok=True)
 
-for f in all_files:
-    df = pd.read_csv(f)
-    before = len(df)
+    # Step 1 — Identify hospital staff
+    staff_df = identify_hospital_staff(INPUT_PATH, WORKER_THRESHOLD)
 
-    # Remove staff IDs
-    df_filtered = df[~df["id"].isin(worker_ids)]
-    after = len(df_filtered)
+    # Save staff list
+    staff_list_path = OUTPUT_PATH / "hospital_staff_list.csv"
+    staff_df.to_csv(staff_list_path, index=False, encoding="utf-8-sig")
+    print(f"\nHospital staff list saved: {staff_list_path}")
 
-    new_name = f.stem + "_drop_staff.csv"
-    out_path = OUTPUT_PATH / new_name
-    df_filtered.to_csv(out_path, index=False, encoding="utf-8-sig")
+    # Step 2 — Remove staff from each file
+    remove_staff_from_daily_files(INPUT_PATH, OUTPUT_PATH, staff_df["id"])
 
-    print(f"{f.name}: {before} → {after} after removing staff → saved as {new_name}")
 
-print("\nProcessing completed successfully!")
+if __name__ == "__main__":
+    main()
