@@ -4,16 +4,6 @@ This repository contains a collection of Python scripts for simulating, processi
 All data used in this project are fully synthetic and generated solely for demonstration and reproducibility purposes.  
 No real or personal information is included.
 
----
-
-## 📁 Project Structure
-Hospital-Bypass/
-├── data/
-│   ├── data.csv          # Synthetic trajectory data: id, lon, lat, datetime
-│   ├── AOI_raw/          # Synthetic AOI (hospital polygons) for testing
-│   └── result_test/      # Folder for storing testing outputs
-│
-└── src/                  # Main analysis scripts
 
 ---
 
