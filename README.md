@@ -92,6 +92,17 @@ Outputs:
 
 ---
 
+We also provide an additional documentation file (**METHODS.md**) that describes the analytical methods used in this project in detail. The document includes:
+
+- The algorithm for computing the **Nth Nearest Hospital Index (NNHI)**  
+- The procedure for calculating **hospital accessibility** using the Enhanced Two-Step Floating Catchment Area (**E2SFCA**) method  
+- The methodology for estimating the **experienced segregation (ES)** index  
+- The workflow for the **discrete choice model** used in bypass behavior analysis  
+
+These methodological explanations are intended to support reproducibility, transparency, and academic use of the accompanying scripts.
+
+---
+
 ## 📦 Requirements
 
 Typical dependencies used across scripts include:
