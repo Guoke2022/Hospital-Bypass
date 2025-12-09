@@ -13,7 +13,7 @@ Formally, for patient \(i\), let \(d_{i1} \le d_{i2} \le \dots \le d_{iJ}\) deno
 \[
 \text{NNHI}_i = N.
 \]
-![Uploading image.png…]()
+
 
 This rank reflects the patient's willingness to prioritize more distant hospitals over closer ones. For example:
 
