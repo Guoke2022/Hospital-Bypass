@@ -74,3 +74,7 @@ This provides a distance-equivalent interpretation of the marginal utility of ho
 
 # Introduction to the code
 
+## step1_process.py
+- Data preprocessing
+## step2_mixlogit.py
+- Discrete Mixed Logit Model Estimation.
