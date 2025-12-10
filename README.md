@@ -1,9 +1,14 @@
 # Hospital-Bypass
 
+---
+
+Source code for "Spatial and socioeconomic inequalities in hospital utilization".
+
+---
+
 This repository contains a collection of Python scripts for simulating, processing, and analyzing synthetic hospital visit trajectories.  
 All data used in this project are fully synthetic and generated solely for demonstration and reproducibility purposes.  
 No real or personal information is included.
-
 
 ---
 
