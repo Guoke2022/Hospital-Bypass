@@ -26,57 +26,30 @@ Higher NNHI values therefore indicate stronger bypass behaviour.
 
 ## 2. Hospital Accessibility (E2SFCA)
 
-Hospital accessibility was evaluated using the Enhanced Two-Step Floating Catchment Area (E2SFCA) method. Hospital accessibility at demand location \(i\) is denoted as \(A_i\).
+Hospital accessibility was evaluated using the Enhanced Two-Step Floating Catchment Area (E2SFCA) method. The accessibility score for demand location i, denoted as $A_i$, is defined as:
 
-### 2.1. General formulation
-
-Accessibility at demand point \(i\) is calculated as:
-![alt text](../images/E2SFCA.png)
-\[
-A_i = \sum_{j:\, t_{ij} \le T_r} R_j \, W_r
-\tag{1}
-\]
+(Insert Formula Image Here)
+(e.g., ![E2SFCA formula](path_to_image.png))
 
 where:
 
-- \(R_j\) is the supply–demand ratio at supply (hospital) location \(j\),
-- \(t_{ij}\) is the shortest travel time from demand point \(i\) to hospital \(j\),
-- \(W_r\) is the distance-decay weight for travel-time band \(r\),
-- \(T_r\) denotes the travel-time threshold(s) considered in band \(r\).
+$R_j$ is the supply-to-demand ratio at hospital $j$
 
-The supply–demand ratio \(R_j\) at hospital \(j\) is given by:
+$t_{ij}$ is the shortest travel time between demand point $i$ and hospital $j$
 
-\[
-R_j = \frac{S_j}{\sum_{k:\, t_{kj} \in T_r} D_k}
-\]
+$W_r$ is the distance-decay weight corresponding to travel-time zone $r$
 
-where:
+Supply ($S_j$) is measured by hospital bed capacity
 
-- \(S_j\) represents the service capacity at hospital \(j\) (e.g., number of beds),
-- \(D_k\) represents the demand (e.g., population size) at demand location \(k\),
-- the denominator sums over all demand locations \(k\) whose travel time \(t_{kj}\) to hospital \(j\) falls within the catchment threshold(s).
+Demand ($D_k$) is measured by the population size at demand location $k$
 
-Substituting \(R_j\) into (1) yields:
+Travel-time thresholds of 15, 30, and 60 minutes were adopted based on the “Golden Hour” principle as well as extensive prior research on healthcare accessibility.
 
-\[
-A_i
-= \sum_{j:\, t_{ij} \le T_r}
-\frac{S_j}{\sum_{k:\, t_{kj} \in T_r} D_k} \, W_r.
-\]
+Distance-decay weights $W_r$ were derived from a Gaussian decay function:
 
-### 2.2. Time thresholds and distance decay
+with $\beta = 440$.
 
-Supply \(S_j\) is based on hospital bed capacity, and demand \(D_k\) is based on population size. Time thresholds of 15, 30, and 60 minutes were used, motivated by the “Golden Hour” rule and empirical research on healthcare accessibility.
-
-To account for distance decay, we employed a Gaussian decay function:
-
-\[
-w(t) = e^{-t^2 / \beta},
-\]
-
-with \(\beta\) set to 440. For each travel-time band \(r\), the corresponding weight \(W_r\) is obtained by evaluating \(w(t)\) at representative travel times within that band.
-
-Shortest travel times \(t_{ij}\) were determined using Chinese urban road design specifications and OpenStreetMap-based road-network data.
+Shortest-path travel times were calculated using OpenStreetMap road network data combined with Chinese urban road design specifications.
 
 ---
 
