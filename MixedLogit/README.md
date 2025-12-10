@@ -72,9 +72,13 @@ where:
 
 This provides a distance-equivalent interpretation of the marginal utility of hospital quality.
 
-# Introduction to the code
+# Introduction to the code and file
 
 ## step1_process.py
-- Data preprocessing
+- Data preprocessing.
 ## step2_mixlogit.py
 - Discrete Mixed Logit Model Estimation.
+## MixedLogit_without_interaction_no_group
+The result of the no group.
+## MixedLogit_without_interaction_SES_group
+The result of the group.
