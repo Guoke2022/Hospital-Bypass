@@ -28,8 +28,7 @@ Higher NNHI values therefore indicate stronger bypass behaviour.
 
 Hospital accessibility was evaluated using the Enhanced Two-Step Floating Catchment Area (E2SFCA) method. The accessibility score for demand location i, denoted as $A_i$, is defined as:
 
-(Insert Formula Image Here)
-(e.g., ![E2SFCA formula](path_to_image.png))
+![alt text](../images/E2SFCA.png)
 
 where:
 
