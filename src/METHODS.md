@@ -144,42 +144,25 @@ This normalization facilitates interpretation and comparison across cities.
 
 ## 4. Discrete Choice Model
 
-To characterize hospital choice behaviour, we adopt a mixed logit (random-coefficients logit) model capturing the trade-off between hospital quality and travel distance.
+A mixed logit discrete choice model was used to evaluate how patients trade off hospital quality against travel distance when selecting a healthcare facility. To accommodate preference heterogeneity, coefficients were specified as random variables, allowing estimation of both mean preferences and standard deviations across the population.
 
 ### 4.1. Utility specification
 
-The utility that patient \(i\) derives from choosing hospital \(j\) is specified as:
+The utility that patient i obtains from choosing hospital j is defined as:
 
-\[
-U_{ij}
-=
-\beta_G G_j
-+
-\beta_B B_j
-+
-\beta_R R_j
--
-\left(
-\beta_D^1 D_{ij}
-+
-\beta_D^2 D_{ij}^2
-+
-\beta_D^3 D_{ij}^3
-\right)
-+
-\varepsilon_{ij}
-\tag{7}
-\]
+![alt text](<../images/Discrete Choice Model1.png>)
 
 where:
 
-- \(G_j\): hospital grade indicator (e.g., Tertiary Grade A, secondary hospital),
-- \(B_j\): hospital bed capacity (in hundreds of beds),
-- \(R_j\): hospital reputation score (e.g., Fudan Chinese Hospital ranking),
-- \(D_{ij}\): travel distance from patient \(i\)'s residence to hospital \(j\) (measured in 100 km units),
-- \(\beta_G, \beta_B, \beta_R\): coefficients for hospital quality attributes,
-- \(\beta_D^1, \beta_D^2, \beta_D^3\): coefficients for the cubic distance specification,
-- \(\varepsilon_{ij}\): idiosyncratic error term.
+G_j = hospital grade (e.g., Tertiary Grade A, Secondary hospital)
+
+B_j = hospital bed capacity (in hundreds)
+
+R_j = Fudan Chinese Hospital ranking
+
+D_{ij} = travel distance from patient i to hospital j (in 100 km units)
+
+ε_{ij} = error term following a Type I extreme value distribution
 
 The cubic distance specification allows for flexible, non-linear distance decay in hospital choice. The error term \(\varepsilon_{ij}\) is assumed to follow a Type I extreme value distribution.
 
@@ -189,28 +172,18 @@ Given computational constraints, the model is estimated via maximum simulated li
 
 ### 4.2. Willingness to travel (WTT)
 
-We compute the **willingness to travel (WTT)** as the marginal rate of substitution between hospital quality attributes and distance, evaluated at selected percentiles of the empirical distance distribution. WTT represents the additional distance patients are willing to travel for a one-unit improvement in hospital quality (e.g., upgrading from a secondary to a tertiary hospital).
+Willingness to travel (WTT) quantifies the additional distance a patient is willing to travel to obtain a one-unit improvement in hospital quality (e.g., upgrading from a secondary hospital to a tertiary hospital). WTT is defined as the marginal rate of substitution between distance and a quality attribute.
 
-For a given quality attribute \(Q\) (where \( \beta_Q \in \{\beta_G, \beta_B, \beta_R\} \)), WTT is computed as:
+For percentile values of the observed distance distribution, WTT is computed as:
 
-\[
-\text{WTT}_{ij}
-=
-- \frac{\beta_Q}{
-\beta_D^1
-+
-2 \beta_D^2 D_{\text{perc}}
-+
-3 \beta_D^3 D_{\text{perc}}^2
-}
-\tag{8}
-\]
+![alt text](<../images/Discrete Choice Model2.png>)
 
 where:
 
-- \(\beta_Q\) is the marginal utility coefficient associated with a quality attribute (grade, beds, or reputation),
-- \(D_{\text{perc}}\) is a selected percentile of the empirical travel distance distribution (e.g., sampled at 5% intervals).
+β_Q ∈ {β_G, β_B, β_R} = marginal utility of a quality attribute (grade, beds, or ranking)
 
-This provides a distance-equivalent interpretation of the marginal utility of hospital quality.
+D_perc = empirical travel distance percentile (evaluated at 5% intervals)
+
+This measure indicates how much additional travel burden patients accept in exchange for higher hospital quality.
 
 ---
