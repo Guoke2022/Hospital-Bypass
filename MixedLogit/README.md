@@ -1,4 +1,4 @@
-#
+# Introduction to the methods
 
 
 ## Discrete Choice Model
@@ -71,4 +71,6 @@ where:
 - \(D_{\text{perc}}\) is a selected percentile of the empirical travel distance distribution (e.g., sampled at 5% intervals).
 
 This provides a distance-equivalent interpretation of the marginal utility of hospital quality.
+
+# Introduction to the code
 
