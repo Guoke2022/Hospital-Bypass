@@ -94,10 +94,11 @@ Outputs:
 
 ### **9. MixedLogit**
 Performs mixed logit–based discrete choice modeling to analyze hospital bypass behavior.
+
 Includes:
-1.Estimation of trade-offs between hospital quality and travel distance
-2.Evaluation of systematic preference differences across SES groups
-3.Full workflow and methodological details (see METHODS.md)
+- Estimation of trade-offs between hospital quality and travel distance
+- Evaluation of systematic preference differences across SES groups
+- Full workflow and methodological details (see METHODS.md)
 
 Outputs:
 - Estimated model parameters
