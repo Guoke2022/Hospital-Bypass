@@ -46,6 +46,8 @@ Travel-time thresholds of 15, 30, and 60 minutes were adopted based on the “Go
 
 Distance-decay weights $W_r$ were derived from a Gaussian decay function:
 
+![alt text](E2SFCA2.png)
+
 with $\beta = 440$.
 
 Shortest-path travel times were calculated using OpenStreetMap road network data combined with Chinese urban road design specifications.
