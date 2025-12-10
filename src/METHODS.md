@@ -86,95 +86,51 @@ This value measures the average socioeconomic distance between unit i and all ot
 
 Experienced integration at the residential-unit level is obtained by aggregating over all hospitals accessed by individuals from unit i:
 
-images/ES2.png
-
-experienced_integration(i)
-
+![alt text](../images/ES2.png)
 
 where:
 
-𝑝
-𝑖
-,
-𝐿
-p
-i,L
-	​
-
- = number of individuals from unit i who visited hospital L
+p_{i,L} = number of individuals from unit i visiting hospital L
 
 HOSPs = set of all hospitals within the city
 
 This weighted average accounts for the distribution of patients from unit i across different hospitals.
 
-Experienced Segregation
+### 4.4. Experienced Segregation
 
 Experienced segregation is defined as:
 
-(Insert Formula Image Here for Equation 3)
-Example placeholder:
-
-experienced_segregation(i) = 1 - experienced_integration(i)
-
+![alt text](../images/ES3.png)
 
 Higher values indicate greater socioeconomic isolation during hospital visits.
 
-Experienced Socioeconomic Class (ESC)
+### 4.5. Experienced Socioeconomic Class (ESC)
 
 To evaluate whether a hospital disproportionately serves high- or low-income communities, we computed an experienced socioeconomic class (ESC) index.
 
-ESC at the Hospital Level
+### 4.5.1. ESC at the Hospital Level
 
 For individuals from unit i accessing hospital L, the ESC score is defined as the average income rank of all patient origins visiting hospital L:
 
-(Insert Formula Image Here for Equation 4)
-Example placeholder:
-
-experienced_socioeconomic_class(i, L)
-
+![alt text](../images/ES4.png)
 
 where:
 
-𝑟
-𝑗
-,
-𝐿
-r
-j,L
-	​
+r_{j,L} = income rank of individuals from unit j who visit hospital L
 
- = income rank of individuals from unit 
-𝑗
-j visiting hospital 
-𝐿
-L
+n = number of residential units represented among patients visiting hospital L
 
-𝑛
-n = total number of residential units with patients visiting the hospital
+This value measures the average socioeconomic distance between unit i and all other units accessing hospital L.
 
-Aggregating to the Unit Level
+### 4.5.2. Aggregating to the Unit Level
 
 Unit-level ESC was computed by weighting hospital-level ESC values by visit counts:
 
-(Insert Formula Image Here for Equation 5)
-Example placeholder:
+![alt text](../images/ES5.png)
 
-experienced_socioeconomic_class(i)
+where again p_{i,L} is the number of individuals from unit i accessing hospital L.
 
-
-where:
-
-𝑝
-𝑖
-,
-𝐿
-p
-i,L
-	​
-
- = number of individuals from unit i visiting hospital L
-
-Rescaling
+### 4.6. Rescaling
 
 Both ES and ESC were rescaled to a 0–10 range, where:
 
@@ -182,7 +138,7 @@ Both ES and ESC were rescaled to a 0–10 range, where:
 
 0 represents the lowest
 
-This facilitates interpretation and comparison across cities.
+This normalization facilitates interpretation and comparison across cities.
 
 ---
 
