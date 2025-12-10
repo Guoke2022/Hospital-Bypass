@@ -391,7 +391,7 @@ if __name__=="__main__":
         "avail_col":"CITY_JUDGE",
         "df_path":"data/process/all_city.parquet",
         "group_attribute":None,
-        "sampling_rate":0.07,
+        "sampling_rate":0.08,
 
         "model_type":"MixedLogit",
         "batch_size":5,
@@ -427,7 +427,7 @@ if __name__=="__main__":
         "avail_col":"CITY_JUDGE",
         "df_path":"data/process/all_city.parquet",
         "group_attribute":"SES_Level",
-        "sampling_rate":0.07,
+        "sampling_rate":0.08,
 
         "model_type":"MixedLogit",
         "batch_size":5,
