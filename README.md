@@ -37,7 +37,7 @@ Workflow:
 
 ---
 
-### **3. plot_figure1.py**
+### **3. figure1_analysis.py**
 Computes statistics and generates the visualizations used in **Figure 1** of the study.  
 Includes:
 - Preprocessing
@@ -46,7 +46,7 @@ Includes:
 
 ---
 
-### **4. plot_figure2.py**
+### **4. figure2_analysis.py**
 Computes summary tables and visualization for **Figure 2**.  
 Includes:
 - Summary CSVs for NNHI, extra travel distance, and bypass rate  
@@ -55,7 +55,7 @@ Includes:
 
 ---
 
-### **5. plot_figure3.py**
+### **5. figure3_analysis.py**
 Generates **Figure 3**, including:
 - Dual bar plots of bypass rate and NNHI by SES groups  
 - Lorenz curves  
@@ -63,7 +63,7 @@ Generates **Figure 3**, including:
 
 ---
 
-### **6. figure4.py**
+### **6. figure4_analysis.py**
 Computes:
 - Experienced Segregation (ES)
 - Income Index (II / ESC in manuscript)
@@ -115,7 +115,7 @@ Files:
 
 ---
 
-### **10. else** 
+### **10. METHODS.md** 
 We also provide an additional documentation file (**METHODS.md**) that describes the analytical methods used in this project in detail. The document includes:
 
 - The algorithm for computing the **Nth Nearest Hospital Index (NNHI)**  
@@ -133,7 +133,11 @@ numpy
 matplotlib
 seaborn
 pathlib2
-geopandas (for spatial processing)
+geopandas
 shapely
-osmnx (for road-network distance in NNHI_calculate.py)
+haversine
+osmnx
+scipy
+functools
+xlogit
 

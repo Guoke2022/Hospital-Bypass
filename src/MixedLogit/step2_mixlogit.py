@@ -69,7 +69,7 @@ from functools import wraps
 import numpy as np
 import scipy.optimize as opt
 import seaborn as sns
-import  matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 import math
 import time
 from datetime import datetime
