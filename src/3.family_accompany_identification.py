@@ -38,7 +38,7 @@ Core Pipeline Steps:
    - Build patient contact network graph based on NetworkX
    - Analyze network structure through graph theory metrics (degree centrality, betweenness centrality, eigenvector centrality)
    - Automatically identify network types: PAIR, STAR, DENSE, MIXED
-   - Classify patient and companion patient roles based on network structure
+   - Classify patient and companion roles based on network structure
    - Calculate companion patient ratios for each city-date combination
 
 Data Flow:
