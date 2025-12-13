@@ -26,7 +26,6 @@ from matplotlib.colors import LinearSegmentedColormap
 
 @dataclass(frozen=True)
 class PathsConfig:
-    """File paths configuration."""
     high_csv: Path
     low_csv: Path
     mid_csv: Path
@@ -39,7 +38,7 @@ class PathsConfig:
 class PlotConfig:
     """Plot styling & scaling configuration."""
     # scaling
-    x_scale: float = 100.0        # option_distance_100_km -> km
+    x_scale: float = 100.0        # option_distance_100_km
     value_scale: float = 100.0    # WTT scale multiplier
 
     # heatmap grouping
@@ -69,7 +68,7 @@ class PlotConfig:
 
 
 def set_global_style() -> None:
-    """Apply global matplotlib + seaborn style (match your original look)."""
+    """Apply global matplotlib + seaborn style."""
     warnings.filterwarnings("ignore")
 
     plt.rcParams.update({
@@ -96,15 +95,14 @@ def set_global_style() -> None:
 
 def build_colormap() -> LinearSegmentedColormap:
     """
-    Soft colormap. (Kept consistent with your current setting)
-    If you want true "blue-white-red", add a blue color at the beginning.
+    Creates a grayscale colormap for heatmap visualization.
     """
     return LinearSegmentedColormap.from_list(
         "rb_soft",
         [
             "#ffffff",  # center white
-            "#545454",  
-            "#2F2F2F",  
+            "#545454",
+            "#2F2F2F",
         ],
         N=256
     )
@@ -263,7 +261,7 @@ def plot_error_panel(
         ax.hlines(y_high, x_ctr - cap_width / 2, x_ctr + cap_width / 2,
                   colors="black", linewidth=1.2, zorder=4)
 
-        # significance stars (kept as original)
+        # significance stars
         ax.text(x_ctr, y_high + star_offset, "***", ha="center", va="bottom",
                 fontsize=22, color="black")
 
@@ -297,7 +295,7 @@ def plot_line_panel(
     colors: dict[str, str],
     show_legend: bool = False,
 ) -> None:
-    """Draw one line chart panel with shaded region after overall peak."""
+    """Draw line chart panel with shaded region after overall peak."""
     ax.plot(
         x, y_high, marker="o", linestyle="--", linewidth=3.0, markersize=9,
         color=colors["high"], label="High",
@@ -319,7 +317,7 @@ def plot_line_panel(
         markeredgecolor="black", markeredgewidth=1
     )
 
-    ax.set_title("")  # keep blank (same as your original)
+    ax.set_title("")
     ax.set_xlabel(xlabel)
     if ylabel:
         ax.set_ylabel(ylabel)
@@ -342,7 +340,7 @@ def plot_line_panel(
     if show_legend:
         handles, labels = ax.get_legend_handles_labels()
 
-        # Desired legend order: Low, High, Mid, Overall (match your code behavior)
+        # Desired legend order: Low, High, Mid, Overall
         desired = ["Low", "High", "Mid", "Overall"]
         idx = [labels.index(name) for name in desired]
 
@@ -376,7 +374,7 @@ def plot_heat_panel(
     show_ylabel: bool,
     show_arrows: bool,
 ) -> None:
-    """Draw one heatmap panel."""
+    """Draw heatmap panel."""
     heat = (
         data.pivot_table(index="grade", columns="dist_group", values="ratio", fill_value=0)
         .sort_index()
@@ -398,7 +396,7 @@ def plot_heat_panel(
     ax.set_xlabel("Travel cost (km)")
     ax.set_ylabel("Hospital quality (grade)" if show_ylabel else "")
 
-    # arrows (kept consistent with your original placement logic)
+    # arrows
     if show_arrows:
         ax.annotate(
             "", xy=(1.05, -0.12), xytext=(-0.085, -0.12),
@@ -441,7 +439,7 @@ def add_panel_labels(all_axes: list[plt.Axes]) -> None:
         if idx in (8, 9):  # skip i, j
             continue
         x_pos = -0.08
-        if idx == 7:  # panel 'h' special shift (your original tweak)
+        if idx == 7:  # panel 'h' special shift
             x_pos = -0.15
         ax.text(
             x_pos, 1.07, lab,
@@ -462,7 +460,7 @@ def make_figure(
     set_global_style()
     cmap = build_colormap()
 
-    # ---- Error-bar row data (kept as your fixed arrays) ----
+    # Error bar data setup
     categories = ["Low", "Mid", "High", "Overall"]
     x_cat = np.arange(len(categories))
 
@@ -498,10 +496,10 @@ def make_figure(
     rep_err = 2 * rep_sd
     distance_err = 2 * distance_sd
 
-    # ---- Line chart data ----
+    # Line chart data
     series = load_line_series(paths, cfg)
 
-    # ---- Heatmap data ----
+    # Heatmap data
     grouped = compute_dist_grade_ratio_from_csv(
         csv_path=paths.heat_source_csv,
         group_interval=cfg.group_interval,
@@ -517,7 +515,7 @@ def make_figure(
         "Tertiary grade A": 4,
     }
 
-    # ---- Figure layout ----
+    # Figure layout
     fig = plt.figure(figsize=cfg.fig_size)
 
     gs = GridSpec(
@@ -549,7 +547,7 @@ def make_figure(
         "all":  "#f7ae55",
     }
 
-    # y-limits (kept from your original)
+    # y-limits
     ylim_grade = (0, None)
     ylim_beds = (0, 0.65)
     ylim_rep = (0, 0.28)
@@ -598,7 +596,7 @@ def make_figure(
             show_arrows=(i == 0),
         )
 
-    # Adjust heatmap row spacing/position (match your original tweak)
+    # Adjust heatmap row spacing/position
     for idx, ax in enumerate(axes_heat):
         pos = ax.get_position()
         if idx > 0:
@@ -631,7 +629,7 @@ def make_figure(
     all_axes = axes_err + axes_line + axes_heat
     add_panel_labels(all_axes)
 
-    # Shift y-label positions (keep your original layout intent)
+    # Shift y-label positions
     axes_err[0].yaxis.set_label_coords(-0.15, 0.5)
     axes_line[0].yaxis.set_label_coords(-0.10, 0.5)
     axes_heat[0].yaxis.set_label_coords(-0.175, 0.5)
@@ -649,8 +647,8 @@ def make_figure(
 # ------------------------------ Entrypoint ------------------------------ #
 
 def main() -> None:
-    # TODO: Update these paths to your local/project layout.
-    DATA_DIR = Path(r"./")
+
+    DATA_DIR = Path("data")
     paths = PathsConfig(
         high_csv=DATA_DIR / "hight.csv",
         low_csv=DATA_DIR / "low.csv",
@@ -666,4 +664,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-
