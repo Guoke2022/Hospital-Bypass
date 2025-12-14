@@ -1,10 +1,11 @@
 # ------------------------------------------------------------------------------
 # figure5_analysis.py
 #
-# Combined figure:
-# Row 1: error-bar style panels (mean ± 2SD, with box-like glyph)
-# Row 2: three line charts
-# Row 3: three heatmaps + shared vertical colorbar
+# Purpose:
+#   - Generate combined figure for patient hospital choice behavior
+#   - Include error-bar panels for hospital grade, capacity, reputation, and distance coefficients
+#   - Line charts for WTT (willingness-to-travel) vs option distance by grade, capacity, reputation
+#   - Heatmaps showing distance vs hospital grade proportions, stratified by SES groups
 # ------------------------------------------------------------------------------
 
 from __future__ import annotations

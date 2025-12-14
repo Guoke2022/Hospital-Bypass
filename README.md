@@ -12,6 +12,7 @@ through `Step3.family_accompany_identification.py`) end-to-end, including hospit
 
 *All datasets included in this repository are fully synthetic and generated solely for demonstration and reproducibility purposes. No real individuals, locations, or mobility trajectories are represented.*
 
+---
 
 ## Python Version
 
@@ -30,10 +31,10 @@ Below is a concise and standardized description of each script's purpose.
 Processes large-scale synthetic trajectory data to extract potential *single-day hospital visits*.
 Key steps include:
 
-- Chunk-based loading of raw CSVs
+- Chunk-based loading of raw **Parquet** trajectory files
 - Coordinate cleaning and bounding-box filtering
 - Spatial matching with hospital polygons
-- Identifying possible hospital visits via residence duration
+- Identification of potential hospital visits based on residence duration
 
 *This script is for demonstration only and all data used in this step are synthetic data.*
 
@@ -116,7 +117,17 @@ Generates **Figure 4**:
 
 ---
 
-### 8. NNHI_calculate.py
+### 8. figure5_analysis.py
+
+Generates **Figure 5**, including:
+
+- Error-bar panels for hospital grade, capacity, reputation, and distance coefficients across SES groups
+- Line charts of willingness-to-travel (WTT) vs option distance by hospital grade, capacity, and reputation
+- Heatmaps showing distance vs hospital grade proportions, stratified by Overall, High-SES, and Low-SES groups
+
+---
+
+### 9. NNHI_calculate.py
 
 Computes the **Nearest N Hospitals Index (NNHI)** and associated road-network distances.
 Includes:
@@ -128,7 +139,7 @@ Written for academic replication; does **not** require actual road networks or c
 
 ---
 
-### 9. sensitivity_analysis.py
+### 10. sensitivity_analysis.py
 
 Performs sensitivity analysis for hospital bypass behavior and SES disparities.
 Includes:
@@ -141,7 +152,7 @@ Outputs:
 
 ---
 
-### 10. MixedLogit
+### 11. MixedLogit
 
 Performs mixed logit–based discrete choice modeling to analyze hospital bypass behavior.
 
